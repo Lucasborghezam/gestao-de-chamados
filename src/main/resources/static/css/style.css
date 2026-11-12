@@ -419,6 +419,81 @@ body {
     margin-top: 6px;
 }
 
+/* Detalhe do chamado */
+.chamado-numero {
+    color: var(--cor-texto-suave);
+    font-weight: 500;
+}
+
+.chamado-etiquetas {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.descricao-texto {
+    padding: 16px 20px 20px;
+    white-space: pre-line;
+    line-height: 1.65;
+}
+
+.andamento {
+    padding: 16px 20px 20px;
+}
+
+.andamento .form-label {
+    font-size: 13px;
+    color: var(--cor-texto-suave);
+}
+
+/* Comentários */
+.comentarios {
+    list-style: none;
+    margin: 0;
+    padding: 8px 20px 0;
+}
+
+.comentario {
+    display: flex;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.comentario:last-child {
+    border-bottom: 0;
+}
+
+.comentario-cabecalho {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.comentario-autor {
+    font-weight: 600;
+}
+
+.comentario-data {
+    font-size: 13px;
+    color: var(--cor-texto-suave);
+}
+
+.comentario-texto {
+    margin-top: 2px;
+    white-space: pre-line;
+    word-break: break-word;
+}
+
+.comentario-novo {
+    padding: 16px 20px 20px;
+    border-top: 1px solid var(--cor-borda);
+    background: #fafbfd;
+    border-radius: 0 0 var(--raio) var(--raio);
+}
+
 .filtros {
     display: flex;
     gap: 12px;

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamado · Central de Chamados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <main class="app-conteudo">
+        <a class="voltar" href="/chamados.html" id="voltar"><i class="bi bi-arrow-left"></i>Chamados</a>
+
+        <div id="erro-pagina"></div>
+
+        <div id="conteudo">
+            <div class="carregando"><span class="spinner-border spinner-border-sm"></span>Carregando chamado...</div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="modal-editar" tabindex="-1" aria-labelledby="modal-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <form class="modal-content" id="formulario" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-titulo">Editar chamado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="erro-formulario"></div>
+                    <div class="mb-3">
+                        <label class="form-label" for="titulo">Título <span class="obrigatorio">*</span></label>
+                        <input type="text" class="form-control" id="titulo" maxlength="150" required>
+                        <div class="invalid-feedback">Informe um título que resuma o problema.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="descricao">Descrição <span class="obrigatorio">*</span></label>
+                        <textarea class="form-control" id="descricao" rows="4" maxlength="1000" required></textarea>
+                        <div class="invalid-feedback">Descreva o problema.</div>
+                        <div class="form-text"><span id="descricao-contador">0</span>/1000 caracteres</div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="form-label d-block" id="rotulo-prioridade">Prioridade <span class="obrigatorio">*</span></span>
+                        <div class="opcoes-prioridade" role="radiogroup" aria-labelledby="rotulo-prioridade">
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-baixa" value="BAIXA">
+                            <label class="btn" for="prioridade-baixa">Baixa</label>
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-media" value="MEDIA">
+                            <label class="btn" for="prioridade-media">Média</label>
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-alta" value="ALTA">
+                            <label class="btn" for="prioridade-alta">Alta</label>
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-critica" value="CRITICA">
+                            <label class="btn critica" for="prioridade-critica">Crítica</label>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-1">
+                        <div class="col-md-6">
+                            <label class="form-label" for="cliente">Cliente <span class="obrigatorio">*</span></label>
+                            <select class="form-select" id="cliente" required></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="categoria">Categoria <span class="obrigatorio">*</span></label>
+                            <select class="form-select" id="categoria" required></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="botao-salvar">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/chamado.js"></script>
+</body>
+</html>
