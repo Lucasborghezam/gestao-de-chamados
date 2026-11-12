@@ -1,20 +1,51 @@
 # Sistema de Chamados
 
-API REST para gestão de chamados, desenvolvida na disciplina de Design e Arquitetura de Sistemas (Univille).
+Sistema web para gestão de chamados, desenvolvido na disciplina de Design e Arquitetura de Sistemas (Univille). É composto por uma API REST e por uma interface web que consome essa API.
 
 ## Tecnologias
 
-Java 21, Spring Boot 4.1.1, Maven, Spring Web, Spring Data JPA, Bean Validation e H2.
+- **Back-end:** Java 21, Spring Boot 4.1.1, Maven, Spring Web, Spring Data JPA, Bean Validation e H2.
+- **Front-end:** HTML, CSS e JavaScript, com Bootstrap 5.3 e Bootstrap Icons. Não há etapa de build: as páginas são servidas pelo próprio Spring Boot.
 
 ## Como executar
+
+No Windows:
 
 ```
 .\mvnw spring-boot:run
 ```
 
-No macOS ou Linux, use `./mvnw spring-boot:run`. A API fica disponível em `http://localhost:8080`.
+No macOS ou Linux:
 
-O banco é H2 em memória, então os dados são apagados quando a aplicação é reiniciada. Para consultá-lo, acesse `http://localhost:8080/h2-console` com a JDBC URL `jdbc:h2:mem:chamadosdb`, o usuário `sa` e a senha em branco.
+```
+./mvnw spring-boot:run
+```
+
+A interface web e a API ficam disponíveis em:
+
+```
+http://localhost:8080
+```
+
+### Banco de dados
+
+O banco é H2 em memória, então os dados são apagados quando a aplicação é reiniciada. Para consultá-lo, acesse o console:
+
+```
+http://localhost:8080/h2-console
+```
+
+No campo **JDBC URL**, informe:
+
+```
+jdbc:h2:mem:chamadosdb
+```
+
+No campo **User Name**, informe o usuário abaixo e deixe a senha em branco:
+
+```
+sa
+```
 
 ## Rotas e exemplos de teste
 
@@ -159,3 +190,69 @@ GET /clientes/1/chamados?page=0&size=5
 ### Formato da resposta
 
 As consultas retornam uma página, com os itens em `content` e os totais em `totalElements` e `totalPages`. O exemplo da etapa 6 mostra a resposta completa.
+
+## Interface web
+
+Com a aplicação rodando, abra no navegador:
+
+```
+http://localhost:8080
+```
+
+A interface usa as mesmas rotas da API descritas acima e não exige login. Os endereços da tabela abaixo são links e abrem a tela direto quando a aplicação está rodando.
+
+### Telas
+
+| Tela | Endereço | O que permite |
+|---|---|---|
+| Dashboard | [localhost:8080](http://localhost:8080) | Ver a quantidade de chamados por status e por prioridade, os últimos chamados e o total de cadastros |
+| Chamados | [localhost:8080/chamados.html](http://localhost:8080/chamados.html) | Listar, filtrar por status, prioridade e cliente, ordenar, paginar e abrir chamados |
+| Detalhe do chamado | [localhost:8080/chamado.html?id=1](http://localhost:8080/chamado.html?id=1) | Editar, excluir, alterar o status, atribuir técnico e comentar |
+| Clientes | [localhost:8080/clientes.html](http://localhost:8080/clientes.html) | Listar, buscar, cadastrar, editar e excluir clientes |
+| Detalhe do cliente | [localhost:8080/cliente.html?id=1](http://localhost:8080/cliente.html?id=1) | Ver os dados de contato e os chamados do cliente |
+| Categorias | [localhost:8080/categorias.html](http://localhost:8080/categorias.html) | Listar, buscar, cadastrar, editar e excluir categorias |
+| Técnicos | [localhost:8080/tecnicos.html](http://localhost:8080/tecnicos.html) | Listar, buscar, filtrar por perfil, cadastrar, editar e excluir técnicos |
+
+- Os erros da API, como validação, registro duplicado ou chamado fechado, aparecem como mensagens na tela.
+- Os filtros da lista de chamados ficam no endereço da página, então continuam aplicados ao recarregar ou voltar.
+- Um chamado fechado tem a edição, a troca de status, a atribuição e os comentários bloqueados, seguindo a regra da API.
+- O layout se adapta ao celular: o menu lateral vira uma gaveta e as tabelas mostram só as colunas principais.
+
+### Organização dos arquivos
+
+Os arquivos ficam em `src/main/resources/static`.
+
+```
+static/
+├── index.html, chamados.html, chamado.html, clientes.html,
+│   cliente.html, categorias.html, tecnicos.html
+├── css/
+│   └── style.css              estilos do sistema
+└── js/
+    ├── api.js                 chamadas à API, mensagens e funções comuns
+    ├── layout.js              menu lateral, montado em todas as páginas
+    ├── formulario-cliente.js  janela de cadastro de cliente, usada em duas telas
+    └── um arquivo por tela    dashboard.js, chamados.js, chamado.js...
+```
+
+### Imagens
+
+Dashboard:
+
+![Dashboard](docs/prints/08-dashboard.png)
+
+Lista de chamados:
+
+![Lista de chamados](docs/prints/09-lista-chamados.png)
+
+Abertura de chamado:
+
+![Abertura de chamado](docs/prints/12-novo-chamado.png)
+
+Detalhe do chamado, com o andamento e os comentários:
+
+![Detalhe do chamado](docs/prints/10-detalhe-chamado.png)
+
+Detalhe do cliente:
+
+![Detalhe do cliente](docs/prints/11-detalhe-cliente.png)
