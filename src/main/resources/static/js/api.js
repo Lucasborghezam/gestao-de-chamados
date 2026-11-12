@@ -144,7 +144,7 @@ function formatarData(valor) {
     }
     return new Date(valor).toLocaleString('pt-BR', {
         day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    });
+    }).replace(',', '');
 }
 
 // Nomes e cores dos enums da API
@@ -166,6 +166,67 @@ const PERFIL = {
     ADMIN: { rotulo: 'Administrador', cor: 'primary' },
     TECNICO: { rotulo: 'Técnico', cor: 'secondary' }
 };
+
+// Telefone para exibição: 47999998888 vira (47) 99999-8888
+function formatarTelefone(valor) {
+    if (!valor) {
+        return '—';
+    }
+    const n = valor.replace(/\D/g, '');
+    if (n.length === 11) {
+        return '(' + n.slice(0, 2) + ') ' + n.slice(2, 7) + '-' + n.slice(7);
+    }
+    if (n.length === 10) {
+        return '(' + n.slice(0, 2) + ') ' + n.slice(2, 6) + '-' + n.slice(6);
+    }
+    return valor;
+}
+
+// Máscara aplicada enquanto o usuário digita o telefone
+function aplicarMascaraTelefone(campo) {
+    campo.addEventListener('input', () => {
+        const n = campo.value.replace(/\D/g, '').slice(0, 11);
+        if (n.length <= 2) {
+            campo.value = n.length ? '(' + n : '';
+        } else if (n.length <= 6) {
+            campo.value = '(' + n.slice(0, 2) + ') ' + n.slice(2);
+        } else if (n.length <= 10) {
+            campo.value = '(' + n.slice(0, 2) + ') ' + n.slice(2, 6) + '-' + n.slice(6);
+        } else {
+            campo.value = '(' + n.slice(0, 2) + ') ' + n.slice(2, 7) + '-' + n.slice(7);
+        }
+    });
+}
+
+// Paginação a partir da resposta paginada da API (number, totalPages, totalElements)
+function renderizarPaginacao(container, pagina, aoMudar) {
+    if (pagina.totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+    const atual = pagina.number;
+    const item = (rotulo, destino, desabilitado, ativo, aria) =>
+        '<li class="page-item' + (desabilitado ? ' disabled' : '') + (ativo ? ' active' : '') + '">' +
+        '<button class="page-link" type="button" data-pagina="' + destino + '"' +
+        (aria ? ' aria-label="' + aria + '"' : '') + (ativo ? ' aria-current="page"' : '') + '>' + rotulo + '</button></li>';
+
+    let botoes = item('<i class="bi bi-chevron-left"></i>', atual - 1, atual === 0, false, 'Página anterior');
+    for (let i = 0; i < pagina.totalPages; i++) {
+        botoes += item(i + 1, i, false, i === atual);
+    }
+    botoes += item('<i class="bi bi-chevron-right"></i>', atual + 1, atual === pagina.totalPages - 1, false, 'Próxima página');
+
+    container.innerHTML =
+        '<div class="paginacao"><span class="contador">Página ' + (atual + 1) + ' de ' + pagina.totalPages + '</span>' +
+        '<nav aria-label="Paginação"><ul class="pagination pagination-sm mb-0">' + botoes + '</ul></nav></div>';
+    container.querySelectorAll('[data-pagina]').forEach(b =>
+        b.addEventListener('click', () => aoMudar(Number(b.dataset.pagina))));
+}
+
+// Lê um parâmetro da URL, como o id em cliente.html?id=3
+function parametroUrl(nome) {
+    return new URLSearchParams(location.search).get(nome);
+}
 
 // Iniciais para o avatar: "Carlos Lima" vira "CL"
 function iniciais(nome) {

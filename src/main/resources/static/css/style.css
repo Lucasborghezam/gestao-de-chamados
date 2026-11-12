@@ -299,6 +299,92 @@ body {
     flex-shrink: 0;
 }
 
+.avatar-grande {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+}
+
+/* Linhas de tabela que abrem um detalhe */
+.linha-clicavel {
+    cursor: pointer;
+}
+
+/* Paginação */
+.paginacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.pagination {
+    --bs-pagination-active-bg: var(--cor-primaria);
+    --bs-pagination-active-border-color: var(--cor-primaria);
+    --bs-pagination-color: var(--cor-texto);
+    --bs-pagination-hover-color: var(--cor-primaria);
+    --bs-pagination-focus-box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
+}
+
+/* Páginas de detalhe */
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.voltar:hover {
+    color: var(--cor-primaria);
+}
+
+.cartao-titulo {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.cartao-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.info-lista {
+    margin: 0;
+    padding: 4px 20px 12px;
+}
+
+.info-lista dt {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--cor-texto-suave);
+    margin-top: 14px;
+}
+
+.info-lista dd {
+    margin: 2px 0 0;
+    word-break: break-word;
+}
+
+.numero-destaque {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
 .filtros {
     display: flex;
     gap: 12px;
