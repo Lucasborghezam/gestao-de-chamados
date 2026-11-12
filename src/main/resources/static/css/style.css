@@ -279,6 +279,38 @@ body {
     color: var(--cor-texto-suave);
 }
 
+/* Avatar com as iniciais de uma pessoa */
+.pessoa {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cor-primaria-suave);
+    color: var(--cor-primaria);
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.filtros {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.filtros .form-select {
+    width: auto;
+    min-width: 170px;
+}
+
 .coluna-acoes {
     width: 1%;
     white-space: nowrap;
@@ -353,6 +385,34 @@ body {
     margin-bottom: 6px;
 }
 
+/* Validação: destaca só os campos com erro, sem o verde nos campos corretos */
+.was-validated .form-control:valid,
+.was-validated .form-select:valid {
+    border-color: var(--bs-border-color);
+    background-image: none;
+    padding-right: .75rem;
+}
+
+.was-validated .form-select:valid:not([multiple]):not([size]) {
+    --bs-form-select-bg-icon: none;
+    background-image: var(--bs-form-select-bg-img);
+    padding-right: 2.25rem;
+}
+
+.was-validated .form-control:valid:focus,
+.was-validated .form-select:valid:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
+}
+
+/* Etiquetas de status, prioridade e perfil */
+.badge {
+    font-weight: 500;
+    font-size: 12px;
+    padding: .4em .8em;
+    letter-spacing: .01em;
+}
+
 .obrigatorio {
     color: #dc2626;
 }
@@ -423,5 +483,23 @@ body {
     .app-conteudo {
         margin-left: 0;
         padding: 24px 16px 40px;
+    }
+}
+
+/* Celular: busca e filtros ocupam a largura toda */
+@media (max-width: 575.98px) {
+    .busca {
+        max-width: none;
+        flex-basis: 100%;
+    }
+
+    .filtros .form-select {
+        flex: 1;
+    }
+
+    .tabela th,
+    .tabela td {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 }

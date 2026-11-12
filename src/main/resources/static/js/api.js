@@ -167,6 +167,14 @@ const PERFIL = {
     TECNICO: { rotulo: 'Técnico', cor: 'secondary' }
 };
 
+// Iniciais para o avatar: "Carlos Lima" vira "CL"
+function iniciais(nome) {
+    const partes = nome.trim().split(/\s+/);
+    const primeira = partes[0].charAt(0);
+    const ultima = partes.length > 1 ? partes[partes.length - 1].charAt(0) : '';
+    return (primeira + ultima).toUpperCase();
+}
+
 function etiqueta(tabela, valor) {
     const item = tabela[valor] || { rotulo: valor, cor: 'secondary' };
     return '<span class="badge rounded-pill text-bg-' + item.cor + ' bg-opacity-75">' + escapar(item.rotulo) + '</span>';
