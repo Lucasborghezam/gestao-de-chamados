@@ -385,6 +385,123 @@ body {
     line-height: 1.1;
 }
 
+/* Dashboard: indicadores por status */
+.indicador {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 14px;
+    align-items: center;
+    padding: 18px 20px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.indicador:hover {
+    border-color: #c7cbf5;
+    box-shadow: 0 4px 12px rgba(16, 24, 40, .08);
+}
+
+.indicador-icone {
+    grid-row: span 2;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
+
+.indicador-rotulo {
+    font-size: 13px;
+    color: var(--cor-texto-suave);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.indicador-valor {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+/* Dashboard: barras de prioridade */
+.barras {
+    padding: 12px 20px 16px;
+}
+
+.barra {
+    display: grid;
+    grid-template-columns: 64px 1fr 32px;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+    color: inherit;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.barra-trilho {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--cor-fundo);
+    overflow: hidden;
+}
+
+.barra-preenchida {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--cor-primaria);
+    transition: width .4s ease;
+}
+
+.barra:hover .barra-preenchida {
+    background: var(--cor-primaria-hover);
+}
+
+.barra-valor {
+    text-align: right;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Dashboard: atalhos para os cadastros */
+.atalhos {
+    padding: 6px 8px;
+}
+
+.atalho {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.atalho:hover {
+    background: var(--cor-fundo);
+}
+
+.atalho-icone {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--cor-primaria-suave);
+    color: var(--cor-primaria);
+    display: grid;
+    place-items: center;
+}
+
+.atalho-total {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
 /* Escolha de prioridade com botões lado a lado */
 .opcoes-prioridade {
     display: grid;
@@ -690,6 +807,19 @@ body {
 
     .filtros .form-select {
         flex: 1;
+    }
+
+    .indicador {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .indicador-icone {
+        grid-row: auto;
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+        margin-bottom: 10px;
     }
 
     .tabela th,

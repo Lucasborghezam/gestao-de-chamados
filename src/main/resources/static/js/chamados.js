@@ -204,6 +204,11 @@ elementoModal.addEventListener('shown.bs.modal', () => campoTitulo.focus());
 
 (async () => {
     await carregarCadastros();
+    // O botão "Novo chamado" do Dashboard chega aqui com ?novo=1
+    const abrirNovo = parametroUrl('novo') === '1';
     lerFiltrosDaUrl();
     await carregar();
+    if (abrirNovo) {
+        abrirCadastro();
+    }
 })();

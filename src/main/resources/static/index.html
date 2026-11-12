@@ -16,15 +16,42 @@
         <div class="pagina-cabecalho">
             <div>
                 <h1 class="pagina-titulo">Dashboard</h1>
-                <p class="pagina-subtitulo">Visão geral dos chamados.</p>
+                <p class="pagina-subtitulo" id="resumo">Visão geral do atendimento.</p>
             </div>
+            <a class="btn btn-primary" href="/chamados.html?novo=1" id="botao-novo"><i class="bi bi-plus-lg"></i>Novo chamado</a>
         </div>
 
-        <div class="cartao">
-            <div class="vazio">
-                <div class="vazio-icone"><i class="bi bi-bar-chart-line"></i></div>
-                <div class="vazio-titulo">Indicadores em breve</div>
-                <p class="mb-0">A contagem de chamados por status e os últimos chamados aparecerão aqui.</p>
+        <div id="erro-pagina"></div>
+
+        <section class="row g-3 mb-4" id="indicadores" aria-label="Chamados por status"></section>
+
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <section class="cartao h-100">
+                    <div class="cartao-cabecalho">
+                        <h2 class="cartao-titulo">Últimos chamados</h2>
+                        <a class="small fw-medium text-decoration-none" href="/chamados.html">Ver todos<i class="bi bi-arrow-right ms-1"></i></a>
+                    </div>
+                    <div id="ultimos">
+                        <div class="carregando"><span class="spinner-border spinner-border-sm"></span>Carregando...</div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-4 d-flex flex-column gap-3">
+                <section class="cartao">
+                    <div class="cartao-cabecalho">
+                        <h2 class="cartao-titulo">Chamados por prioridade</h2>
+                    </div>
+                    <div id="prioridades" class="barras"></div>
+                </section>
+
+                <section class="cartao">
+                    <div class="cartao-cabecalho">
+                        <h2 class="cartao-titulo">Cadastros</h2>
+                    </div>
+                    <div id="cadastros" class="atalhos"></div>
+                </section>
             </div>
         </div>
     </main>
@@ -32,5 +59,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/api.js"></script>
     <script src="/js/layout.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>
