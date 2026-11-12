@@ -61,7 +61,8 @@ async function carregar() {
 async function carregarChamados(pagina) {
     const area = document.getElementById('chamados');
     try {
-        const resultado = await api('GET', '/clientes/' + id + '/chamados?page=' + pagina + '&size=' + TAMANHO_PAGINA);
+        const resultado = await api('GET', '/clientes/' + id + '/chamados?page=' + pagina + '&size=' + TAMANHO_PAGINA +
+            '&sort=dataAbertura,desc&sort=id,desc');
         document.getElementById('total-chamados').textContent = resultado.totalElements;
 
         if (resultado.totalElements === 0) {

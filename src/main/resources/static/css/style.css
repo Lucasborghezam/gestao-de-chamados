@@ -385,6 +385,40 @@ body {
     line-height: 1.1;
 }
 
+/* Escolha de prioridade com botões lado a lado */
+.opcoes-prioridade {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.opcoes-prioridade .btn {
+    border-color: var(--cor-borda);
+    color: var(--cor-texto-suave);
+    font-size: 14px;
+}
+
+.opcoes-prioridade .btn-check:checked + .btn {
+    background: var(--cor-primaria-suave);
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+}
+
+.opcoes-prioridade .btn-check:checked + .btn.critica {
+    background: #fef2f2;
+    border-color: #dc2626;
+    color: #b91c1c;
+}
+
+.opcoes-prioridade .btn-check:focus-visible + .btn {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
+}
+
+.aviso-cadastro {
+    font-size: 13px;
+    margin-top: 6px;
+}
+
 .filtros {
     display: flex;
     gap: 12px;

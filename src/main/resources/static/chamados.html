@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamados · Central de Chamados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <main class="app-conteudo">
+        <div class="pagina-cabecalho">
+            <div>
+                <h1 class="pagina-titulo">Chamados</h1>
+                <p class="pagina-subtitulo">Acompanhe e filtre as solicitações de atendimento.</p>
+            </div>
+            <button class="btn btn-primary" type="button" id="botao-novo">
+                <i class="bi bi-plus-lg"></i>Novo chamado
+            </button>
+        </div>
+
+        <div id="erro-pagina"></div>
+
+        <div class="cartao">
+            <div class="barra-ferramentas">
+                <div class="filtros">
+                    <select class="form-select" id="filtro-status" aria-label="Filtrar por status">
+                        <option value="">Todos os status</option>
+                        <option value="ABERTO">Aberto</option>
+                        <option value="EM_ATENDIMENTO">Em atendimento</option>
+                        <option value="AGUARDANDO_CLIENTE">Aguardando cliente</option>
+                        <option value="FECHADO">Fechado</option>
+                    </select>
+                    <select class="form-select" id="filtro-prioridade" aria-label="Filtrar por prioridade">
+                        <option value="">Todas as prioridades</option>
+                        <option value="CRITICA">Crítica</option>
+                        <option value="ALTA">Alta</option>
+                        <option value="MEDIA">Média</option>
+                        <option value="BAIXA">Baixa</option>
+                    </select>
+                    <select class="form-select" id="filtro-cliente" aria-label="Filtrar por cliente">
+                        <option value="">Todos os clientes</option>
+                    </select>
+                    <select class="form-select" id="ordenacao" aria-label="Ordenar chamados">
+                        <option value="dataAbertura,desc">Mais recentes</option>
+                        <option value="dataAbertura,asc">Mais antigos</option>
+                        <option value="titulo,asc">Título (A-Z)</option>
+                    </select>
+                    <button class="btn btn-link text-decoration-none d-none" type="button" id="limpar-filtros">
+                        <i class="bi bi-x-lg"></i>Limpar filtros
+                    </button>
+                </div>
+                <span class="contador" id="contador"></span>
+            </div>
+            <div id="lista">
+                <div class="carregando"><span class="spinner-border spinner-border-sm"></span>Carregando chamados...</div>
+            </div>
+            <div id="paginacao"></div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="modal-chamado" tabindex="-1" aria-labelledby="modal-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <form class="modal-content" id="formulario" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-titulo">Novo chamado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="erro-formulario"></div>
+                    <div class="mb-3">
+                        <label class="form-label" for="titulo">Título <span class="obrigatorio">*</span></label>
+                        <input type="text" class="form-control" id="titulo" maxlength="150" required placeholder="Ex.: Computador não liga">
+                        <div class="invalid-feedback">Informe um título que resuma o problema.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="descricao">Descrição <span class="obrigatorio">*</span></label>
+                        <textarea class="form-control" id="descricao" rows="4" maxlength="1000" required placeholder="Descreva o que acontece, desde quando e o que já foi tentado."></textarea>
+                        <div class="invalid-feedback">Descreva o problema.</div>
+                        <div class="form-text"><span id="descricao-contador">0</span>/1000 caracteres</div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="form-label d-block" id="rotulo-prioridade">Prioridade <span class="obrigatorio">*</span></span>
+                        <div class="opcoes-prioridade" role="radiogroup" aria-labelledby="rotulo-prioridade">
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-baixa" value="BAIXA">
+                            <label class="btn" for="prioridade-baixa">Baixa</label>
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-media" value="MEDIA" checked>
+                            <label class="btn" for="prioridade-media">Média</label>
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-alta" value="ALTA">
+                            <label class="btn" for="prioridade-alta">Alta</label>
+                            <input type="radio" class="btn-check" name="prioridade" id="prioridade-critica" value="CRITICA">
+                            <label class="btn critica" for="prioridade-critica">Crítica</label>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-1">
+                        <div class="col-md-6">
+                            <label class="form-label" for="cliente">Cliente <span class="obrigatorio">*</span></label>
+                            <select class="form-select" id="cliente" required></select>
+                            <div class="invalid-feedback">Selecione o cliente.</div>
+                            <div class="aviso-cadastro texto-suave d-none" id="aviso-cliente">
+                                Nenhum cliente cadastrado. <a href="/clientes.html">Cadastrar cliente</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="categoria">Categoria <span class="obrigatorio">*</span></label>
+                            <select class="form-select" id="categoria" required></select>
+                            <div class="invalid-feedback">Selecione a categoria.</div>
+                            <div class="aviso-cadastro texto-suave d-none" id="aviso-categoria">
+                                Nenhuma categoria cadastrada. <a href="/categorias.html">Cadastrar categoria</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="botao-salvar">Abrir chamado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/chamados.js"></script>
+</body>
+</html>
